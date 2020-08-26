@@ -17,21 +17,73 @@ class BSTNode:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        # Compare target value to node.value
+        # If value > node.value:
+        if value >= self.value:
+            # Go right
+            # If node.right is None:
+            if self.right is None:
+                # Create the new node there
+                self.right = BSTNode(value)
+            else:  # self.right is a BSTNode
+                # Do the same thing (aka recurse)
+                # Insert value into node.right
+                # right_child is a BSTNode, so we can call insert on it
+                right_child = self.right
+                right_child.insert(value)
+        # Else if value < node.value
+        if value <= self.value:
+            # Go Left
+            # If node.left is None:
+            if self.left is None:
+                # Create node
+                self.left = BSTNode(value)
+            else:
+                # Do the same thing
+                # (compare, go left or right)
+                # Insert value into node.left
+                left_child = self.left
+                left_child.insert(value)
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+    # if the node passed in, has the same value as target we good
+        if self.value == target:
+            return True
+        if self.value < target:
+            if self.right == None:
+                return False
+            elif self.right.value == target:
+                return True
+            else:
+                self.right.contains(target)
+        else:
+            if self.left == None:
+                return False
+            elif self.left.value == target:
+                return True
+            else:
+                self.left.contains(target)
+
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        bigger_node = self
+        # keep moving right until right is none
+        while bigger_node.right is not None:
+            bigger_node = bigger_node.right
+        return bigger_node.value
+
 
     # Call the function `fn` on the value of each node
-    def for_each(self, fn):
-        pass
-
+    def for_each(self, fn): # start here
+        fn(self.value)   # hits the current node that's passed in
+        if self.left is not None: # hit the left node first
+            self.left.for_each(fn) # run the function (for_each) then goes back to the top and starts over
+        if self.right is not None:
+            self.right.for_each(fn)
+        
     # Part 2 -----------------------
 
     # Print all the values in order from low to high
@@ -73,13 +125,13 @@ bst.insert(3)
 bst.insert(4)
 bst.insert(2)
 
-bst.bft_print()
-bst.dft_print()
+# bst.bft_print()
+# bst.dft_print()
 
-print("elegant methods")
-print("pre order")
-bst.pre_order_dft()
-print("in order")
-bst.in_order_dft()
-print("post order")
-bst.post_order_dft()  
+# print("elegant methods")
+# print("pre order")
+# bst.pre_order_dft()
+# print("in order")
+# bst.in_order_dft()
+# print("post order")
+# bst.post_order_dft()  
