@@ -9,6 +9,13 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+
+from stack import Stack
+from queue import Queue
+import sys
+sys.path.append('../stack')
+sys.path.append('../queue')
+print(sys.path)
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -89,17 +96,56 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self):
-        pass
+        # lowest number is always the furthest to the left
+        # base case
+        # if node is None
+        #recursive case
+        if self.left:
+            self.left.in_order_print()
+        print(self.value)
+        if self.right:
+            self.right.in_order_print()
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self):
-        pass
+        # Create a var to hold the Queue calss
+        queue = Queue()
+        # Add the first node to the queue
+        queue.enqueue(self)
+        # A while loop to iterate over the Tree
+        while len(queue) != 0:
+            # On enter of the queue dequeue/remove the node value from the Queue - Curr still holds the value of the node being removed
+            curr = queue.dequeue()
+            # print the current value
+            print(curr.value)
+            # Look to see if the current value has a left node
+            if curr.left:
+                # if it does add it to the queue and run the while loop again
+                queue.enqueue(curr.left)
+            # Look to see if the current value has a Right node
+            if curr.right:
+                # if it does add it to the queue and run the while loop again
+                queue.enqueue(curr.right)
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self):
-        pass
+        # use the stack class
+        # start your stack with the root node
+        # while loop that checks the stack size
+            # use a pointer variable and keep updating it
+        stack = Stack()
+        stack.push(self)
+        while len(stack) > 0:
+            curr = stack.pop()
+            print(curr.value)
+            if curr.left is not None:
+                stack.push(curr.left)
+            if curr.right is not None:
+                stack.push(curr.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
